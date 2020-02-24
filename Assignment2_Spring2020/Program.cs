@@ -25,18 +25,15 @@ namespace Assignment2_CT_Spring2020
             int[] l2 = new int[] { 2, 2, 3, 5, 6 };
             int sum = MinimumSum(l2);
             Console.WriteLine(sum);
+
             Console.WriteLine("Question 4");
             string s2 = "Dell";
             string sortedString = FreqSort(s2);
             Console.WriteLine(sortedString);
+
             Console.WriteLine("Question 5-Part 1");
-            //int[] nums1 = { 1, 2, 2, 1 };
-            //int[] nums2 = { 2, 2 };
-
-            int[] nums1 = { 3, 6, 2 };
-            int[] nums2 = { 6, 3, 6, 7, 3 };
-
-
+            int[] nums1 = { 1, 2, 2, 1 };
+            int[] nums2 = { 2, 2 };
             int[] intersect1 = Intersect1(nums1, nums2);
             Console.WriteLine("Part 1- Intersection of two arrays is: ");
             DisplayArray(intersect1);
@@ -46,23 +43,22 @@ namespace Assignment2_CT_Spring2020
             Console.WriteLine("Part 2- Intersection of two arrays is: ");
             DisplayArray(intersect2);
             Console.WriteLine("\n");
+
             Console.WriteLine("Question 6");
-            //char[] arr = new char[] { 'a', 'g', 'h', 'a' };
-            //char[] arr = new char[] { 'k', 'y', 'k', 'k' };
-            char[] arr = new char[] { 'a', 'b', 'c', 'a', 'b', 'c' };
-            //int k = 3;
-            //int k = 1;
-            int k = 2;
+            char[] arr = new char[] { 'a', 'g', 'h', 'a' };
+            int k = 3;
             Console.WriteLine(ContainsDuplicate(arr, k));
+
             Console.WriteLine("Question 7");
             int rodLength = 4;
             int priceProduct = GoldRod(rodLength);
             Console.WriteLine(priceProduct);
+
             Console.WriteLine("Question 8");
             string[] userDict = new string[] { "rocky", "usf", "hello", "apple" };
-            //string keyword = "hhllo";
-            string keyword = "ucf";
+            string keyword = "hhllo";
             Console.WriteLine(DictSearch(userDict, keyword));
+
             Console.WriteLine("Question 9");
             SolvePuzzle();
         }
@@ -74,6 +70,7 @@ namespace Assignment2_CT_Spring2020
                 Console.Write(n + " ");
             }
         }
+
         public static int[] TargetRange(int[] l1, int t)
         {
 
@@ -168,9 +165,14 @@ namespace Assignment2_CT_Spring2020
             int sum = 0;
             try
             {
-
+               //loop through elements in array from 1st element to last but one
+               //we loop through till last but one element because it will be
+               // incremented before last index if it is same as previous element.
                 for (int i = 0; i < l2.Length - 1; i++)
                 {
+                    /*increment the next element by 1 if it is same as previous
+                     element. Increment it by 1 to keep distinct and sum minimum.
+                     */
                     if (l2[i] == l2[i + 1])
                     {
                         l2[i + 1] = l2[i + 1] + 1;
@@ -178,7 +180,7 @@ namespace Assignment2_CT_Spring2020
 
                     sum += l2[i];
                 }
-
+                //add the last element sum as it won't be added in for loop.
                 sum += l2[l2.Length - 1];
             }
             catch (Exception)
@@ -190,12 +192,20 @@ namespace Assignment2_CT_Spring2020
 
         public static string FreqSort(string s2)
         {
+            //initialize empty string to store result.
             string result = "";
             try
             {
+                //create empty dictinoary freq with character keys and integer values
                 Dictionary<char, int> freq = new Dictionary<char, int>();
+
+                /* Loop through the string to add character keys and their occurrence
+                 * count in the string.
+                 */
                 for (int i = 0; i < s2.Length; i++)
                 {
+                    //If key exists, add to occurrence count else initialize
+                    //value of key(character) to 1.
                     if (freq.ContainsKey(s2[i]))
                     {
                         freq[s2[i]] += 1;
@@ -206,10 +216,19 @@ namespace Assignment2_CT_Spring2020
                     }
                 }
 
+                //Create sorted dictinoary of integer keys and list of characters.
                 SortedDictionary<int, List<char>> sortedfreq = new SortedDictionary<int, List<char>>();
 
+                /* Loop through freq dictionary and load sorted dictionary
+                 * dictionary contains integer value which represents number of
+                 * times a character repeats in string. Dictionary is sorted
+                 * by integer keys.
+                 */
                 foreach (KeyValuePair<char, int> kvp in freq)
                 {
+                    //if key exists, add character to character list else
+                    //initialize new list with the character and assign to value
+                    //of key.
                     if (sortedfreq.ContainsKey(kvp.Value))
                     {
                         sortedfreq[kvp.Value].Add(kvp.Key);
@@ -221,20 +240,25 @@ namespace Assignment2_CT_Spring2020
 
                 }
 
+
+                //Loop through sorted list and print characters as many times
+                //as they occur in string in order of frequency.
                 foreach (KeyValuePair<int, List<char>> kvp in sortedfreq)
                 {
-                    Console.WriteLine("Key: {0}, Value : {1}", kvp.Key, string.Join(",", kvp.Value));
 
                     foreach (char c in kvp.Value)
                     {
+                        //Loop to print each character as many times as
+                        //it appears in string.
                         for (int i = 0; i < kvp.Key; i++)
                         {
+                            //sortedfreq is sorted on integer keys in ascending
+                            //order, so add characters to starting of result.
                             result = c + result;
                         }
                     }
                 }
 
-                //Console.WriteLine(result);
             }
             catch (Exception)
             {
@@ -265,9 +289,6 @@ namespace Assignment2_CT_Spring2020
 
                 Array.Sort(nums1_int1);
                 Array.Sort(nums2_int1);
-
-                //implement merge sort
-
 
                 int i = 0; int j = 0; int k = 0;
                 while (i < nums1_int1.Length && j < nums2_int1.Length)
@@ -304,14 +325,12 @@ namespace Assignment2_CT_Spring2020
 
         public static int[] Intersect2(int[] nums1, int[] nums2)
         {
-            Console.WriteLine(string.Join(",", nums1));
             int[] result = new int[] { };
             try
             {
                 Dictionary<int, int> nums1_dict = new Dictionary<int, int>();
                 foreach (int num in nums1)
                 {
-                    Console.WriteLine(num);
                     if (nums1_dict.ContainsKey(num))
                     {
                         nums1_dict[num] += 1;
@@ -320,11 +339,6 @@ namespace Assignment2_CT_Spring2020
                     {
                         nums1_dict[num] = 1;
                     }
-                }
-
-                foreach (KeyValuePair<int, int> kvp in nums1_dict)
-                {
-                    Console.WriteLine("Key:{0}, Value:{1}", kvp.Key, kvp.Value);
                 }
 
 
@@ -348,9 +362,6 @@ namespace Assignment2_CT_Spring2020
                 {
                     result[i] = nums1_int2[i];
                 }
-
-
-                Console.WriteLine(string.Join(",", nums1));
 
             }
             catch
@@ -563,8 +574,6 @@ namespace Assignment2_CT_Spring2020
                     }
                 }
 
-                Console.WriteLine(string.Join(",", uniqlist));
-
 
 
                 int[] opt = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -636,9 +645,6 @@ namespace Assignment2_CT_Spring2020
 
                     if ((input1_int + input2_int) == output_int)
                     {
-                        Console.WriteLine(input1_int);
-                        Console.WriteLine(input2_int);
-                        Console.WriteLine(output_int);
                         foreach (KeyValuePair<char, int> kvp in uniq_dict)
                         {
                             Console.WriteLine("Char: {0}, Integer:{1}", kvp.Key, kvp.Value);
